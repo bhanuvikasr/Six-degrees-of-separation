@@ -23,8 +23,7 @@ public:
     vector<Data*> cast;
 
     MovieNode(string name,
-    int weight,
-    vector<Data*> cast)
+    int weight)
         : name(name), weight(weight) { }
 
     bool addCast(Data* new_cast);

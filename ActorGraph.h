@@ -11,10 +11,16 @@
 #define ACTORGRAPH_H
 
 #include <iostream>
+#include <unordered_map>
+#include "ActorNode.h"
+#include "MovieNode.h"
 
 // Maybe include some data structures here
 
 using namespace std;
+
+// class ActorNode;
+// class MovieNode<Data>;
 
 class ActorGraph {
 protected:
@@ -22,6 +28,12 @@ protected:
     // Maybe add class data structure(s) here
 
 public:
+  // unordered_map of movie names, movie node pointers
+  unordered_map<string,MovieNode<ActorNode>*> movies_map;
+
+  // unordered_map of actor_names, actor node pointers
+  unordered_map<string,ActorNode*> actors_map;
+
     ActorGraph(void);
 
     // Maybe add some more methods here
@@ -37,6 +49,8 @@ public:
      * return true if file was loaded sucessfully, false otherwise
      */
     bool loadFromFile(const char* in_filename, bool use_weighted_edges);
+
+
 
 };
 
