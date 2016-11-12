@@ -16,12 +16,12 @@ class ActorNode{
 
 public:
     string name;
-    vector<MovieNode*> movies;
+    vector<MovieNode<ActorNode>*> movies;
 
     ActorNode(string name,
-    vector<MovieNode*> movies):name(name){}
+    vector<MovieNode<ActorNode>*> movies):name(name){}
 
-    bool Add_movie(MovieNode* new_movie);
+    bool addMovie(MovieNode<ActorNode>* new_movie);
 
 };
 

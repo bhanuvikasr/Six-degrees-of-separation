@@ -14,22 +14,20 @@ using namespace std;
 /** A class, instances of which are movie nodes stores the pointers to the cast
     of the movie
  */
+template<typename Data>
 class MovieNode {
 
 public:
     string name;
     int weight;
-    vector<ActorNode*> cast;
-    // vector<int> cast;
+    vector<Data*> cast;
 
     MovieNode(string name,
     int weight,
-    // vector<int> cast)
-    vector<ActorNode*> cast)
+    vector<Data*> cast)
         : name(name), weight(weight) { }
-    //~MovieNode();
-    bool Add_cast(ActorNode* new_cast);
-    // bool Add_cast(int new_cast);
+
+    bool addCast(Data* new_cast);
 
 };
 

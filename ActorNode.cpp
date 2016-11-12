@@ -7,7 +7,7 @@
 
 
 // method for adding a new movie;
-bool ActorNode::Add_movie(MovieNode* new_movie){
+bool ActorNode::addMovie(MovieNode<ActorNode>* new_movie){
   if(new_movie != NULL){
     movies.push_back(new_movie);
     return true;
