@@ -18,8 +18,7 @@ public:
     string name;
     vector<MovieNode<ActorNode>*> movies;
 
-    ActorNode(string name,
-    vector<MovieNode<ActorNode>*> movies):name(name){}
+    ActorNode(string name):name(name){}
 
     bool addMovie(MovieNode<ActorNode>* new_movie);
 
