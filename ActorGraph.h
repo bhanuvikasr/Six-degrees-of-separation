@@ -18,14 +18,15 @@ using namespace std;
 
 class ActorGraph {
 protected:
-  
+
     // Maybe add class data structure(s) here
 
 public:
     ActorGraph(void);
 
     // Maybe add some more methods here
-  
+
+
     /** You can modify this method definition as you wish
      *
      * Load the graph from a tab-delimited file of actor->movie relationships.
@@ -36,7 +37,7 @@ public:
      * return true if file was loaded sucessfully, false otherwise
      */
     bool loadFromFile(const char* in_filename, bool use_weighted_edges);
-  
+
 };
 
 
