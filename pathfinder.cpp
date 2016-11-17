@@ -62,7 +62,6 @@ void outputPath(ActorNode* actor, ofstream & out) {
   string temp;
   while (actor->previous.second) {
     temp = "(" + actor->previous.second->name + ")--[" + actor->previous.first->name + "#@" + to_string(2016 - actor->previous.first->weight) + "]-->";
-    // cout << actor->previous.first->name << " and " << actor->previous.second->name << " at distance " << actor->years << endl;
     path = temp + path;
     actor = actor->previous.second;
   }
@@ -139,15 +138,13 @@ int main(int argc, char**argv){
       // we have actor1 and actor2, now what?
       ActorNode* actor1 = G.actors_map.at(actor1_name);
       ActorNode* actor2 = G.actors_map.at(actor2_name);
-      // std::cout << "actor1 "<< actor1 << std::endl;
       if(actor1 && actor2 != NULL){
         BFS(actor1, actor2);
-        // std::cout << "hello" << std::endl;
         outputPath(actor2, out);
         reset(G);
       }
       else{
-        std::cout << "Hello there you got a problem" << std::endl;
+        std::cout << "Hello there! You got a problem" << std::endl;
       }
 
   }
