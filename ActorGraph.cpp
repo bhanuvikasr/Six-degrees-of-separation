@@ -1,7 +1,7 @@
 /*
  * ActorGraph.cpp
- * Author: <YOUR NAME HERE>
- * Date:   <DATE HERE>
+ * Author: Bhanu Vikas Renukuntla & Dion Chung
+ * Date:   16th Nov 2016
  *
  * This file is meant to exist as a container for starter code that you can use to read the input file format
  * defined in movie_casts.tsv. Feel free to modify any/all aspects as you wish.

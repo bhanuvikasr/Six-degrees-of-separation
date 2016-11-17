@@ -1,13 +1,9 @@
+/*
+ * MovieNode.h
+ * Author: Bhanu Vikas Renukuntla & Dion Chung
+ * Date:   16th Nov 2016
+ *
+ * This file is a cpp file for the class Movie Node
+ */
 #include "MovieNode.h"
 #include <vector>
-
-
-template<typename Data>
-// method for adding a new cast;
-bool MovieNode<Data>::addCast(Data* new_cast){
-  if(new_cast !=NULL){
-    cast.push_back(new_cast);
-    return true;
-  }
-  return false;
-}

@@ -1,3 +1,12 @@
+/**
+* ActorNode.cpp
+* Author: Bhanu Vikas Renukuntla & Dion Chung
+* Date:   16th Nov 2016
+*
+* A class, instances of which are Actor nodes stores the pointers to the movies
+* of the actor
+*/
+
 #ifndef ACTORNODE_H
 #define ACTORNODE_H
 
@@ -22,8 +31,6 @@ public:
     pair<MovieNode<ActorNode>*, ActorNode*> previous;
 
     ActorNode(string name);
-
-    bool addMovie(MovieNode<ActorNode>* new_movie);
 
 };
 

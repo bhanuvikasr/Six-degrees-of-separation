@@ -1,11 +1,11 @@
-/*
- * ActorGraph.h
- * Author: <YOUR NAME HERE>
- * Date:   <DATE HERE>
- *
- * This file is meant to exist as a container for starter code that you can use to read the input file format
- * defined in movie_casts.tsv. Feel free to modify any/all aspects as you wish.
- */
+/**
+* ActorNode.cpp
+* Author: Bhanu Vikas Renukuntla & Dion Chung
+* Date:   16th Nov 2016
+*
+* This file is meant to exist as a container for starter code that you can use to read the input file format
+* defined in movie_casts.tsv. Feel free to modify any/all aspects as you wish.
+*/
 
 #ifndef ACTORGRAPH_H
 #define ACTORGRAPH_H
@@ -18,9 +18,6 @@
 // Maybe include some data structures here
 
 using namespace std;
-
-// class ActorNode;
-// class MovieNode<Data>;
 
 class ActorGraph {
 protected:

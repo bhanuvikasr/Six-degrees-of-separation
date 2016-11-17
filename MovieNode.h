@@ -1,10 +1,17 @@
+/*
+ * MovieNode.h
+ * Author: Bhanu Vikas Renukuntla & Dion Chung
+ * Date:   16th Nov 2016
+ *
+ * This file is a header file for the class Movie Node
+ */
+
 #ifndef MOVIENODE_H
 #define MOVIENODE_H
 
 #include <iostream>
 #include <string>
 #include <vector>
-// #include "ActorNode.h"
 
 
 typedef unsigned char byte;
@@ -25,8 +32,6 @@ public:
     MovieNode(string name,
     int weight)
         : name(name), weight(weight) { }
-
-    bool addCast(Data* new_cast);
 
 };
 

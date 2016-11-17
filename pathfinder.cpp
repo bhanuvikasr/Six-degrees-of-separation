@@ -1,3 +1,11 @@
+/*
+ * pathfinder.cpp
+ * Author: Bhanu Vikas Renukuntla & Dion Chung
+ * Date:   16th Nov 2016
+ *
+ * This file has methods to find shortest path between any 2 given ActorNodes.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,7 +15,9 @@
 
 using namespace std;
 
-
+/** A function to iterate over the graph using BFS algorithm to find the
+    shortest path between actor1 and actor2
+ */
 void BFS(ActorNode* actor1, ActorNode* actor2) {
   queue<ActorNode*> bfs_queue;
 
@@ -40,8 +50,13 @@ void BFS(ActorNode* actor1, ActorNode* actor2) {
       }
     }
   }
+  return;
 }
 
+
+/** A function to backtrace the shortest path found by BFS function using
+    previous variable in the ActorNode.
+ */
 void outputPath(ActorNode* actor, ofstream & out) {
   string path = "(" + actor->name + ")";
   string temp;
@@ -54,6 +69,9 @@ void outputPath(ActorNode* actor, ofstream & out) {
   out << path + "\n";
 }
 
+/** A function to reset the years and previous variables in ActorNode to -1 and
+    {NULL,NULL} respectively. Needed for BFS function to work properly.
+ */
 void reset(ActorGraph& G) {
   for (auto it = G.actors_map.begin(); it != G.actors_map.end(); ++it) {
     it->second->years = -1;
@@ -61,6 +79,8 @@ void reset(ActorGraph& G) {
   }
 }
 
+/** MAIN function
+ */
 int main(int argc, char**argv){
 
   char* const movie_casts = argv[1];
@@ -82,8 +102,9 @@ int main(int argc, char**argv){
   G.loadFromFile(movie_casts, isUnweighted);
 
   out << "(actor)--[movie#@year]-->(actor)--...\n";
-  // for each line in the find_pairs
+
   bool have_header = false;
+  // for each line in the find_pairs
 
   while (in) {
       string s;
@@ -118,14 +139,16 @@ int main(int argc, char**argv){
       // we have actor1 and actor2, now what?
       ActorNode* actor1 = G.actors_map.at(actor1_name);
       ActorNode* actor2 = G.actors_map.at(actor2_name);
-      // if(actor1 && actor2 != NULL){
+      // std::cout << "actor1 "<< actor1 << std::endl;
+      if(actor1 && actor2 != NULL){
         BFS(actor1, actor2);
+        // std::cout << "hello" << std::endl;
         outputPath(actor2, out);
         reset(G);
-      // }
-      // else{
-      //   std::cout << "Hello there you got a problem" << std::endl;
-      // }
+      }
+      else{
+        std::cout << "Hello there you got a problem" << std::endl;
+      }
 
   }
 
@@ -138,5 +161,5 @@ int main(int argc, char**argv){
   in.close();
   out.close();
 
-
+  return 0;
 }
