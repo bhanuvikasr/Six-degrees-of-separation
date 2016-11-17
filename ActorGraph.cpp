@@ -7,6 +7,8 @@
  * defined in movie_casts.tsv. Feel free to modify any/all aspects as you wish.
  */
 
+ #include <typeinfo>
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -61,17 +63,19 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges) 
         // we have an actor/movie relationship, now what?
 
         ActorNode* actor = actors_map[actor_name];
-        if(actor == NULL){
+        if(actor == nullptr){
           // create an actor node
-          actor = new  ActorNode(actor_name);
-          actors_map.insert({actor_name,actor});
+          actor = new ActorNode(actor_name);
+          actors_map[actor_name] = actor;
         }
-        MovieNode<ActorNode>* movie = movies_map[movie_title];
+        int weight = 2016 - movie_year;
+        string movie_key = movie_title + to_string(weight);
+        MovieNode<ActorNode>* movie = movies_map[movie_key];
         if(movie == NULL){
           // create a movie node
-          int weight = 2016 - movie_year;
+
           movie = new MovieNode<ActorNode>(movie_title,weight);
-          movies_map.insert({movie_title,movie});
+          movies_map[movie_key] = movie;
         }
         actor->movies.push_back(movie);
         movie->cast.push_back(actor);

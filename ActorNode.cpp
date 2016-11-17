@@ -3,8 +3,8 @@
 #include <vector>
 
 
-// method for creaitng and initialising a node;
-
+// method for creatng and initialising a node;
+ActorNode::ActorNode(string name) : name(name), years(-1), previous({NULL, NULL}) {}
 
 // method for adding a new movie;
 bool ActorNode::addMovie(MovieNode<ActorNode>* new_movie){

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "MovieNode.h"
 
 typedef unsigned char byte;
@@ -17,8 +18,10 @@ class ActorNode{
 public:
     string name;
     vector<MovieNode<ActorNode>*> movies;
+    int years;
+    pair<MovieNode<ActorNode>*, ActorNode*> previous;
 
-    ActorNode(string name):name(name){}
+    ActorNode(string name);
 
     bool addMovie(MovieNode<ActorNode>* new_movie);
 
