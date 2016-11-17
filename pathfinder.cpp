@@ -40,12 +40,26 @@ void BFS(ActorNode* actor1, ActorNode* actor2) {
       }
     }
   }
+}
 
-  ActorNode* n2 = actor2;
-  while (n2->previous.second) {
-    cout << n2->previous.first->name << " and " << n2->previous.second->name << " at distance " << n2->years << endl;
-    n2 = n2->previous.second;
+void outputPath(ActorNode* actor, ofstream & out) {
+  string path = "(" + actor->name + ")";
+  string temp;
+  while (actor->previous.second) {
+    temp = "(" + actor->previous.second->name + ")--[" + actor->previous.first->name + "#@" + to_string(2016 - actor->previous.first->weight) + "]-->";
+    cout << actor->previous.first->name << " and " << actor->previous.second->name << " at distance " << actor->years << endl;
+    path = temp + path;
+    actor = actor->previous.second;
   }
+  out << path + "\n";
+}
+
+void reset(ActorGraph& G) {
+  for (auto it = G.actors_map.begin(); it != G.actors_map.end(); ++it) {
+    it->second->years = -1;
+    it->second->previous = {NULL, NULL};
+  }
+
 }
 
 int main(int argc, char**argv){
@@ -59,6 +73,11 @@ int main(int argc, char**argv){
     isUnweighted = 1;
   }
 
+  ifstream in;
+  in.open(find_pairs);
+  ofstream out;
+  out.open(output);
+
   // read argv[1] to create an actor graph
   ActorGraph G;
   G.loadFromFile(movie_casts, isUnweighted);
@@ -68,7 +87,13 @@ int main(int argc, char**argv){
   string name2 = "ABKARIAN, SIMON";
   ActorNode* actor2 = G.actors_map[name2];
 
+  out << "(actor)--[movie#@year]-->(actor)--...\n";
   BFS(actor1, actor2);
+  outputPath(actor2, out);
+  reset(G);
+
+  in.close();
+  out.close();
 
 
 }
