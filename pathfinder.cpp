@@ -4,21 +4,11 @@
 #include <sstream>
 #include <queue>
 #include "ActorGraph.h"
-#include "BFSNode.h"
 
 using namespace std;
 
-// bool BFS(ActorNode* actor1, ActorNode* actor2, vector<pair<string, string>>& path) {
-//   queue<BFSNode*> bfs_queue;
-//
-//   BFSNode* root = new BFSNode(actor1);
-//   root->movie = actor1->movies[0];
-//   root->p = NULL;
-//   bfs_queue.push(root);
-// }
 
 void BFS(ActorNode* actor1, ActorNode* actor2) {
-  // queue<pair<MovieNode<ActorNode>*, ActorNode*>> bfs_queue;
   queue<ActorNode*> bfs_queue;
 
   bfs_queue.push(actor1);
