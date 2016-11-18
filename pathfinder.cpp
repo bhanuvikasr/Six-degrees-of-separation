@@ -18,7 +18,7 @@ using namespace std;
 /** A function to iterate over the graph using BFS algorithm to find the
     shortest path between actor1 and actor2
  */
-void BFS(ActorNode* actor1, ActorNode* actor2) {
+bool BFS(ActorNode* actor1, ActorNode* actor2) {
   queue<ActorNode*> bfs_queue;
 
   bfs_queue.push(actor1);
@@ -37,7 +37,7 @@ void BFS(ActorNode* actor1, ActorNode* actor2) {
     }
 
     if (n->name==actor2->name) {
-      break;
+      return true;
     }
 
     for (int i=0; i<n->movies.size(); i++) {
@@ -50,7 +50,7 @@ void BFS(ActorNode* actor1, ActorNode* actor2) {
       }
     }
   }
-  return;
+  return false;
 }
 
 
@@ -73,8 +73,10 @@ void outputPath(ActorNode* actor, ofstream & out) {
  */
 void reset(ActorGraph& G) {
   for (auto it = G.actors_map.begin(); it != G.actors_map.end(); ++it) {
-    it->second->years = -1;
-    it->second->previous = {NULL, NULL};
+    if (it->second != NULL) {
+      it->second->years = -1;
+      it->second->previous = {NULL, NULL};
+    }
   }
 }
 
@@ -135,23 +137,28 @@ int main(int argc, char**argv){
       string actor1_name(record[0]);
       string actor2_name(record[1]);
 
-      // we have actor1 and actor2, now what?
-      ActorNode* actor1 = G.actors_map.at(actor1_name);
-      ActorNode* actor2 = G.actors_map.at(actor2_name);
-      if(actor1 && actor2 != NULL){
-        BFS(actor1, actor2);
-        outputPath(actor2, out);
+      auto it1 = G.actors_map.find(actor1_name);
+      auto it2 = G.actors_map.find(actor2_name);
+      if(it1 != G.actors_map.end() && it2 != G.actors_map.end()) {
+        ActorNode* actor1 = G.actors_map.at(actor1_name);
+        ActorNode* actor2 = G.actors_map.at(actor2_name);
+        bool foundPath = BFS(actor1, actor2);
+        if (foundPath) {
+          outputPath(actor2, out);
+        }
+        else {
+          // TODO correct handling of disconnected actors
+        }
         reset(G);
       }
       else{
-        std::cout << "Hello there! You got a problem" << std::endl;
+        // TODO correct handling bad actor names
+        std::cout << "One or more of the actors is invalid" << std::endl;
       }
-
   }
 
   if (!in.eof()) {
       cerr << "Failed to read " << find_pairs << "!\n";
-      return false;
   }
 
 
