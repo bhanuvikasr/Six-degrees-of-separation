@@ -28,9 +28,12 @@ public:
     string name;
     vector<MovieNode<ActorNode>*> movies;
     int years;
+    bool isVisited;
     pair<MovieNode<ActorNode>*, ActorNode*> previous;
 
     ActorNode(string name);
+
+    bool operator<(const ActorNode& other);
 
 };
 

@@ -11,5 +11,17 @@
 #include <vector>
 
 
-// method for creating and initialising a node;
-ActorNode::ActorNode(string name) : name(name), years(-1), previous({NULL, NULL}) {}
+// method for creating and initialising a node
+ActorNode::ActorNode(string name) : name(name), years(-1), isVisited(false), previous({NULL, NULL}) {}
+
+// overload < for priority_queue
+bool ActorNode::operator<(const ActorNode& other) {
+  if (this->years>other.years) {
+    return true;
+  }
+  else if (this->years<other.years) {
+    return false;
+  }
+  // prioritize alphabetically
+  return (this->name<other.name);
+}

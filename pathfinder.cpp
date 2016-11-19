@@ -15,6 +15,18 @@
 
 using namespace std;
 
+/** A 'function class' for use as the Compare class in a
+ *  priority_queue<ActorNode*>.
+ *  For this to work, operator< must be defined to
+ *  do the right thing on ActorNodes.
+ */
+class ActorNodePtrComp {
+public:
+    bool operator()(ActorNode*& lhs, ActorNode*& rhs) const {
+        return *lhs < *rhs;
+    }
+};
+
 /** A function to iterate over the graph using BFS algorithm to find the
     shortest path between actor1 and actor2
  */
@@ -53,6 +65,41 @@ bool BFS(ActorNode* actor1, ActorNode* actor2) {
   return false;
 }
 
+/** A function to iterate over the graph using Dijkstra's algorithm to find the
+    shortest path between actor1 and actor2 over weighted edges.
+ */
+bool dijkstra(ActorNode* actor1, ActorNode* actor2) {
+  priority_queue<ActorNode*, vector<ActorNode*>, ActorNodePtrComp> actor_queue;
+
+  actor_queue.push(actor1);
+  while (!actor_queue.empty()) {
+    ActorNode* n = actor_queue.top();
+    actor_queue.pop();
+    if (n->isVisited) {
+      continue;
+    }
+
+    if (!n->previous.second) {
+      n->years = 0;
+    }
+
+    n->isVisited = true;
+
+    for (int i=0; i<n->movies.size(); i++) {
+      for (int j=0; j<n->movies[i]->cast.size(); j++) {
+        ActorNode* next = n->movies[i]->cast[j];
+        int nextWeight = n->years + n->movies[i]->weight;
+        if (next->name!=n->name && next->isVisited==false && (nextWeight < next->years || next->years == -1)) {
+          next->years = nextWeight;
+          next->previous = make_pair(n->movies[i], n);
+          actor_queue.push(next);
+        }
+      }
+    }
+  }
+  return true;
+}
+
 
 /** A function to backtrace the shortest path found by BFS function using
     previous variable in the ActorNode.
@@ -76,6 +123,7 @@ void reset(ActorGraph& G) {
     if (it->second != NULL) {
       it->second->years = -1;
       it->second->previous = {NULL, NULL};
+      it->second->isVisited = false;
     }
   }
 }
@@ -142,7 +190,11 @@ int main(int argc, char**argv){
       if(it1 != G.actors_map.end() && it2 != G.actors_map.end()) {
         ActorNode* actor1 = G.actors_map.at(actor1_name);
         ActorNode* actor2 = G.actors_map.at(actor2_name);
-        bool foundPath = BFS(actor1, actor2);
+
+        bool foundPath;
+        if (isUnweighted) foundPath = BFS(actor1, actor2);
+        else foundPath = dijkstra(actor1, actor2);
+
         if (foundPath) {
           outputPath(actor2, out);
         }
