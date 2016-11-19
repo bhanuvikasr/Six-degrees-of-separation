@@ -1,9 +1,9 @@
 /*
- * pathfinder.cpp
+ * actorconnections.cpp
  * Author: Bhanu Vikas Renukuntla & Dion Chung
  * Date:   16th Nov 2016
  *
- * This file has methods to find shortest path between any 2 given ActorNodes.
+ * This file has methods to find if any two actors are connected.
  */
 
 #include <iostream>
@@ -16,17 +16,15 @@
 
 using namespace std;
 
-/** MAIN function
- */
 int main(int argc, char**argv){
 
   char* const movie_casts = argv[1];
-  string edge_weight = argv[2];
-  string find_pairs = argv[3];
-  string output = argv[4];
-  bool isUnweighted = 0;
-  if (edge_weight == "u"){
-    isUnweighted = 1;
+  string find_pairs = argv[2];
+  string output = argv[3];
+  string method = argv[4];
+  bool useUF = 1;
+  if (method == "bfs"){
+    useUF = 0;
   }
 
   ifstream in;
@@ -36,7 +34,7 @@ int main(int argc, char**argv){
 
   // read argv[1] to create an actor graph
   ActorGraph G;
-  G.loadFromFile(movie_casts, isUnweighted);
+  G.loadFromFile(movie_casts, false);
 
   out << "(actor)--[movie#@year]-->(actor)--...\n";
 
@@ -75,31 +73,19 @@ int main(int argc, char**argv){
 
       auto it1 = G.actors_map.find(actor1_name);
       auto it2 = G.actors_map.find(actor2_name);
+
       if(it1 != G.actors_map.end() && it2 != G.actors_map.end()) {
         ActorNode* actor1 = G.actors_map.at(actor1_name);
         ActorNode* actor2 = G.actors_map.at(actor2_name);
 
-        bool foundPath;
-        if (isUnweighted) foundPath = BFS(actor1, actor2);
-        else foundPath = dijkstra(actor1, actor2);
-
-        if (foundPath) {
-          outputPath(actor2, out);
+        if (!useUF) {
+          for (int year = G.oldestYear; year < 2016; year++) {
+            bool foundPath = BFS(actor1, actor2, year);
+            if (foundPath) {
+              out << actor1_name + "\t" + actor2_name + "\t" + year + "\n";
+            }
+          }
         }
-        else {
-          // TODO correct handling of disconnected actors
-        }
-        reset(G);
-      }
-      else{
-        // TODO correct handling bad actor names
-        std::cout << "One or more of the actors is invalid" << std::endl;
-      }
-  }
-
-  if (!in.eof()) {
-      cerr << "Failed to read " << find_pairs << "!\n";
-  }
 
 
   in.close();
