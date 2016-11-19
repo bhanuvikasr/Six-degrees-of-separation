@@ -82,7 +82,7 @@ bool BFS(ActorNode* actor1, ActorNode* actor2, int year) {
     }
 
     for (int i=0; i<n->movies.size(); i++) {
-      if (2016 - n->movies[i]->weight <= year) {
+      if ((2016 - n->movies[i]->weight) <= year) {
         for (int j=0; j<n->movies[i]->cast.size(); j++) {
           ActorNode* next = n->movies[i]->cast[j];
           if (next->name!=n->name && next->years==-1 && next->previous.second==NULL) {

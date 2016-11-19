@@ -73,7 +73,7 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges) 
         MovieNode<ActorNode>* movie = movies_map[movie_key];
         if(movie == NULL){
           // create a movie node
-
+          if (movie_year < oldestYear) oldestYear = movie_year;
           movie = new MovieNode<ActorNode>(movie_title,weight);
           movies_map[movie_key] = movie;
         }

@@ -79,13 +79,18 @@ int main(int argc, char**argv){
         ActorNode* actor2 = G.actors_map.at(actor2_name);
 
         if (!useUF) {
-          for (int year = G.oldestYear; year < 2016; year++) {
+          for (int year = G.oldestYear; year <= 2016; year++) {
+            // cout << " Running year " << year << endl;
             bool foundPath = BFS(actor1, actor2, year);
             if (foundPath) {
-              out << actor1_name + "\t" + actor2_name + "\t" + year + "\n";
+              out << actor1_name + "\t" + actor2_name + "\t" + to_string(year) + "\n";
+              break;
             }
+            reset(G);
           }
         }
+      }
+    }
 
 
   in.close();
