@@ -33,8 +33,10 @@ public:
 
     ActorGraph(void);
 
-    // Destructor
-    void ~ActorGraph();
+    /* Destructor function
+     *
+     */
+    ~ActorGraph();
 
     // Maybe add some more methods here
 

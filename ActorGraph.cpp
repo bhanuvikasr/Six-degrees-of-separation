@@ -93,7 +93,7 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges) 
 /* Destructor function
  *
  */
-void ActorGraph::~ActorGraph(){
+ActorGraph::~ActorGraph(){
   for (auto it = actors_map.begin(); it != actors_map.end(); ++it) {
     delete it->second;
   }
