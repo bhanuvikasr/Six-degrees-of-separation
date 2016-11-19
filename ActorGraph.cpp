@@ -89,3 +89,15 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges) 
 
     return true;
 }
+
+/* Destructor function
+ *
+ */
+ActorGraph::~ActorGraph(){
+  for (auto it = actors_map.begin(); it != actors_map.end(); ++it) {
+    delete it->second;
+  }
+  for (auto it = movies_map.begin(); it != movies_map.end(); ++it) {
+    delete it->second;
+  }
+}
