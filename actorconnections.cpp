@@ -46,8 +46,8 @@ int main(int argc, char**argv){
     }
     cout << U.actors_map.size() << " is the size" << endl;
     // std::cout << "" << std::endl;
-    // int y = U.getYear("BACON, KEVIN (I)", "HOUNSOU, DJIMON");
-    // cout << "Year for BACON, KEVIN (I) and HOUNSOU, DJIMON " << y << endl;
+    int y = U.getYear("BACON, KEVIN (I)", "HOUNSOU, DJIMON");
+    cout << "Year for BACON, KEVIN (I) and HOUNSOU, DJIMON " << y << endl;
   }
 
   out << "(actor)--[movie#@year]-->(actor)--...\n";

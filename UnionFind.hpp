@@ -55,29 +55,33 @@ int UnionFind::getHeight(UFActorNode *n) {
 }
 
 bool UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
-  // n1->previous = n2;
   vector<UFActorNode*> headNodes;
   // UFActorNode* head1 = find(n1);
   // UFActorNode* head2 = find(n2);
-  int max_size=0;
-  UFActorNode* head_max;
-  for(int i = 0; i < ActorsList.size(); i++) {
+
+  int max_size = 0;
+  UFActorNode* head_max = find(ActorsList[0]);
+  cout << "Entered join " << head_max->name << endl;
+  for (int i = 0; i < ActorsList.size(); i++) {
     cout << ActorsList[i]->name << " ";
-    // UFActorNode* temp_head_max = find(ActorsList[i]);
-    // headNodes.push_back(temp_head_max);
-    headNodes.push_back(find(ActorsList[i]));
+    UFActorNode* temp_head_max = find(ActorsList[i]);
+    cout << "This head is " << temp_head_max->name << endl;
+    headNodes.push_back(temp_head_max);
+    // headNodes.push_back(find(ActorsList[i]));
     int size = ActorsList[i]->size;
     if(max_size < size){
       max_size = size;
-      // head_max = temp_head_max;
-      head_max = find(ActorsList[i]);
+      head_max = temp_head_max;
+      // head_max = find(ActorsList[i]);
     }
   }
   cout << endl;
 
+  for(int j = 0; j < headNodes.size(); j++) cout << headNodes[j]->name;
+
   for(int j = 0; j < headNodes.size(); j++) {
     UFActorNode* temp = headNodes[j];
-    if(temp != head_max){ // only connects sets which are disconnected
+    if(temp->name != head_max->name){ // only connects sets which are disconnected
       cout << "Joining " << head_max->name << " with " << temp->name << endl;
       temp->previous = head_max;
       temp->yearConnected = movie_year;
