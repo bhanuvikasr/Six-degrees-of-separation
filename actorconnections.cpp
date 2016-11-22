@@ -41,11 +41,7 @@ int main(int argc, char**argv){
     U.loadFromFile(movie_casts);
     U.buildGraph();
 
-    for(auto it = U.actors_map.begin(); it != U.actors_map.end(); it++) {
-      cout << it->first << " has name "<< it->second->name << endl;
-    }
     cout << U.actors_map.size() << " is the size" << endl;
-    // std::cout << "" << std::endl;
     int y = U.getYear("BACON, KEVIN (I)", "HOUNSOU, DJIMON");
     cout << "Year for BACON, KEVIN (I) and HOUNSOU, DJIMON " << y << endl;
   }
@@ -94,7 +90,6 @@ int main(int argc, char**argv){
           ActorNode* actor1 = G.actors_map.at(actor1_name);
           ActorNode* actor2 = G.actors_map.at(actor2_name);
           for (int year = G.oldestYear; year <= 2016; year++) {
-            // cout << " Running year " << year << endl;
             bool foundPath = BFS(actor1, actor2, year);
             if (foundPath) {
               out << actor1_name + "\t" + actor2_name + "\t" + to_string(year) + "\n";

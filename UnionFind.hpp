@@ -44,45 +44,31 @@ UnionFind::~UnionFind() {
 
 int UnionFind::getHeight(UFActorNode *n) {
   int height = 0;
-  cout << "Height: ";
   while (n) {
     height++;
-    cout << n->name << " ";
     n = n->previous;
   }
-  cout << "With height " << height << endl;
   return height;
 }
 
 bool UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
   vector<UFActorNode*> headNodes;
-  // UFActorNode* head1 = find(n1);
-  // UFActorNode* head2 = find(n2);
 
   int max_size = 0;
   UFActorNode* head_max = find(ActorsList[0]);
-  cout << "Entered join " << head_max->name << endl;
   for (int i = 0; i < ActorsList.size(); i++) {
-    cout << ActorsList[i]->name << " ";
     UFActorNode* temp_head_max = find(ActorsList[i]);
-    cout << "This head is " << temp_head_max->name << endl;
     headNodes.push_back(temp_head_max);
-    // headNodes.push_back(find(ActorsList[i]));
     int size = ActorsList[i]->size;
     if(max_size < size){
       max_size = size;
       head_max = temp_head_max;
-      // head_max = find(ActorsList[i]);
     }
   }
-  cout << endl;
-
-  for(int j = 0; j < headNodes.size(); j++) cout << headNodes[j]->name;
 
   for(int j = 0; j < headNodes.size(); j++) {
     UFActorNode* temp = headNodes[j];
     if(temp->name != head_max->name){ // only connects sets which are disconnected
-      cout << "Joining " << head_max->name << " with " << temp->name << endl;
       temp->previous = head_max;
       temp->yearConnected = movie_year;
       head_max->size += temp->size;
@@ -94,11 +80,8 @@ bool UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
 
 UFActorNode* UnionFind::find(UFActorNode* n) {
   while (n->previous) {
-    // cout << n->name << " ";
     n = n->previous;
   }
-  // cout << " Find" << endl;
-  cout << "Found result " << n->name << endl;
   return n;
 }
 
@@ -106,11 +89,8 @@ int UnionFind::getYear(string actor1, string actor2) {
   UFActorNode* a1 = actors_map[actor1];
   UFActorNode* a2 = actors_map[actor2];
   UFActorNode* head1 = find(a1);
-  cout << "This should be richard brake " << head1->name << endl;
   UFActorNode* head2 = find(a2);
   int maxYear = 0;
-  std::cout << a1->name << " " << a2->name << " " << NULL << std::endl;
-  std::cout << head1->name << " " << head2->name << " " << NULL << std::endl;
   if(head1->name == head2->name){
     int h1 = getHeight(a1);
     int h2 = getHeight(a2);
@@ -197,8 +177,6 @@ void UnionFind::loadFromFile(const char* in_filename) {
 
 void UnionFind::buildGraph() {
   for(auto it = movies_map.begin(); it != movies_map.end(); it++) {
-    // cout << it->first << " this is the year+name" << endl;
-    cout << it->second->name << " has weight " << it->second->weight << endl;
     int movie_year = 2016 - it->second->weight;
     join(it->second->cast, movie_year);
   }
