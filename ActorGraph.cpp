@@ -60,8 +60,6 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges) 
         string movie_title(record[1]);
         int movie_year = stoi(record[2]);
 
-        // we have an actor/movie relationship, now what?
-
         ActorNode* actor = actors_map[actor_name];
         if(actor == nullptr){
           // create an actor node

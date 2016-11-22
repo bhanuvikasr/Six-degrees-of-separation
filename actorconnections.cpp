@@ -12,6 +12,7 @@
 #include <sstream>
 #include <queue>
 #include "ActorGraph.h"
+#include "UnionFind.hpp"
 #include "traversalfunctions.cpp"
 
 using namespace std;
@@ -32,9 +33,22 @@ int main(int argc, char**argv){
   ofstream out;
   out.open(output);
 
-  // read argv[1] to create an actor graph
   ActorGraph G;
-  G.loadFromFile(movie_casts, false);
+  UnionFind U;
+
+  if (!useUF) G.loadFromFile(movie_casts, false);
+  else {
+    U.loadFromFile(movie_casts);
+    U.buildGraph();
+
+    for(auto it = U.actors_map.begin(); it != U.actors_map.end(); it++) {
+      cout << it->first << " has name "<< it->second->name << endl;
+    }
+    cout << U.actors_map.size() << " is the size" << endl;
+    // std::cout << "" << std::endl;
+    // int y = U.getYear("BACON, KEVIN (I)", "HOUNSOU, DJIMON");
+    // cout << "Year for BACON, KEVIN (I) and HOUNSOU, DJIMON " << y << endl;
+  }
 
   out << "(actor)--[movie#@year]-->(actor)--...\n";
 
@@ -71,14 +85,14 @@ int main(int argc, char**argv){
       string actor1_name(record[0]);
       string actor2_name(record[1]);
 
-      auto it1 = G.actors_map.find(actor1_name);
-      auto it2 = G.actors_map.find(actor2_name);
+      if (!useUF) {
 
-      if(it1 != G.actors_map.end() && it2 != G.actors_map.end()) {
-        ActorNode* actor1 = G.actors_map.at(actor1_name);
-        ActorNode* actor2 = G.actors_map.at(actor2_name);
+        auto it1 = G.actors_map.find(actor1_name);
+        auto it2 = G.actors_map.find(actor2_name);
 
-        if (!useUF) {
+        if(it1 != G.actors_map.end() && it2 != G.actors_map.end()) {
+          ActorNode* actor1 = G.actors_map.at(actor1_name);
+          ActorNode* actor2 = G.actors_map.at(actor2_name);
           for (int year = G.oldestYear; year <= 2016; year++) {
             // cout << " Running year " << year << endl;
             bool foundPath = BFS(actor1, actor2, year);
@@ -90,7 +104,11 @@ int main(int argc, char**argv){
           }
         }
       }
-    }
+      else {
+        // useUF
+      }
+  }
+
 
 
   in.close();

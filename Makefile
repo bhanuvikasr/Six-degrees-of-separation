@@ -21,7 +21,7 @@ all: pathfinder actorconnections
 # include what ever source code *.h files pathfinder relies on (these are merely the ones that were used in the solution)
 
 pathfinder: ActorGraph.o MovieNode.o ActorNode.o
-actorconnections: ActorGraph.o MovieNode.o ActorNode.o
+actorconnections: ActorGraph.o MovieNode.o ActorNode.o UFActorNode.o
 
 
 
@@ -32,6 +32,7 @@ actorconnections: ActorGraph.o MovieNode.o ActorNode.o
 ActorGraph.o: UnionFind.hpp MovieNode.h ActorNode.h ActorGraph.h traversalfunctions.cpp
 MovieNode.o: MovieNode.h
 ActorNode.o: ActorNode.h
+UFActorNode.o: UFActorNode.h
 
 
 clean:
