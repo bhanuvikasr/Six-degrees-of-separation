@@ -29,7 +29,7 @@ public:
   UnionFind(void);
   ~UnionFind();
   int getHeight(UFActorNode* n);
-  bool join(vector<UFActorNode*> & ActorsList, int movie_year);
+  void join(vector<UFActorNode*> & ActorsList, int movie_year);
   UFActorNode* find(UFActorNode* n);
   int getYear(string actor1, string actor2);
   void loadFromFile(const char* in_filename);
@@ -42,6 +42,9 @@ UnionFind::~UnionFind() {
 
 }
 
+/*
+ * Return height of from root to node
+ */
 int UnionFind::getHeight(UFActorNode *n) {
   int height = 0;
   while (n) {
@@ -51,7 +54,10 @@ int UnionFind::getHeight(UFActorNode *n) {
   return height;
 }
 
-bool UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
+/*
+ * Joins a vector of actor nodes, setting year they are joined
+ */
+void UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
   vector<UFActorNode*> headNodes;
 
   int max_size = 0;
@@ -74,10 +80,11 @@ bool UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
       head_max->size += temp->size;
     }
   }
-
-  return false;
 }
 
+/*
+ * Get the sentinal node of the set, return head
+ */
 UFActorNode* UnionFind::find(UFActorNode* n) {
   while (n->previous) {
     n = n->previous;
@@ -85,6 +92,9 @@ UFActorNode* UnionFind::find(UFActorNode* n) {
   return n;
 }
 
+/*
+ * Return greatest year connecting two actors
+ */
 int UnionFind::getYear(string actor1, string actor2) {
   UFActorNode* a1 = actors_map[actor1];
   UFActorNode* a2 = actors_map[actor2];
@@ -98,8 +108,8 @@ int UnionFind::getYear(string actor1, string actor2) {
       swap(h1, h2);
       swap(a1, a2);
     }
-    int dh = h2 - h1;
-      for (int h = 0; h < dh; h++) {
+    int diff = h2 - h1;
+      for (int h = 0; h < diff; h++) {
         if (maxYear < a2->yearConnected) maxYear = a2->yearConnected;
         a2 = a2->previous;
       }
@@ -117,6 +127,9 @@ int UnionFind::getYear(string actor1, string actor2) {
   }
 }
 
+/*
+ * Read in file of actor movie connections and build maps
+ */
 void UnionFind::loadFromFile(const char* in_filename) {
   // Initialize the file stream
   ifstream infile(in_filename);
@@ -175,6 +188,9 @@ void UnionFind::loadFromFile(const char* in_filename) {
   }
 }
 
+/*
+ * Iterate over movie map and build the set graph
+ */
 void UnionFind::buildGraph() {
   for(auto it = movies_map.begin(); it != movies_map.end(); it++) {
     int movie_year = 2016 - it->second->weight;

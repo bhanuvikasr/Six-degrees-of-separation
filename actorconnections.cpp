@@ -40,13 +40,9 @@ int main(int argc, char**argv){
   else {
     U.loadFromFile(movie_casts);
     U.buildGraph();
-
-    cout << U.actors_map.size() << " is the size" << endl;
-    int y = U.getYear("BACON, KEVIN (I)", "HOUNSOU, DJIMON");
-    cout << "Year for BACON, KEVIN (I) and HOUNSOU, DJIMON " << y << endl;
   }
 
-  out << "(actor)--[movie#@year]-->(actor)--...\n";
+  out << "Actor1\tActor2\tYear\n";
 
   bool have_header = false;
   // for each line in the find_pairs
@@ -100,11 +96,12 @@ int main(int argc, char**argv){
         }
       }
       else {
-        // useUF
+        int year = U.getYear(actor1_name, actor2_name);
+        if (year!=0) {
+          out << actor1_name + "\t" + actor2_name + "\t" + to_string(year) + "\n";
+        }
       }
   }
-
-
 
   in.close();
   out.close();

@@ -3,8 +3,8 @@
 * Author: Bhanu Vikas Renukuntla & Dion Chung
 * Date:   16th Nov 2016
 *
-* A class, instances of which are Actor nodes stores the pointers to the movies
-* of the actor
+* A class, instances of which are Actor nodes stores the pointers to other actor
+* nodes for UnionFind
 */
 #include "UFActorNode.h"
 #include "MovieNode.h"
