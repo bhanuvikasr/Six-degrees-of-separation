@@ -38,8 +38,16 @@ public:
 
 UnionFind::UnionFind(void) {}
 
+/*
+ * Destructor
+ */
 UnionFind::~UnionFind() {
-
+  for (auto it = actors_map.begin(); it != actors_map.end(); ++it) {
+    delete it->second;
+  }
+  for (auto it = movies_map.begin(); it != movies_map.end(); ++it) {
+    delete it->second;
+  }
 }
 
 /*
@@ -55,7 +63,7 @@ int UnionFind::getHeight(UFActorNode *n) {
 }
 
 /*
- * Joins a vector of actor nodes, setting year they are joined
+ * Joins a vector of actor nodes (if they are not already joined), setting year they are joined
  */
 void UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
   vector<UFActorNode*> headNodes;
@@ -74,7 +82,7 @@ void UnionFind::join(vector<UFActorNode*> & ActorsList, int movie_year) {
 
   for(int j = 0; j < headNodes.size(); j++) {
     UFActorNode* temp = headNodes[j];
-    if(temp->name != head_max->name){ // only connects sets which are disconnected
+    if(temp->name != head_max->name){
       temp->previous = head_max;
       temp->yearConnected = movie_year;
       head_max->size += temp->size;
