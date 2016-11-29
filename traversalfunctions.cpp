@@ -1,3 +1,11 @@
+/**
+* traversalfunctions.cpp
+* Author: Bhanu Vikas Renukuntla & Dion Chung
+* Date:   16th Nov 2016
+*
+* This file contains methods for graph traversal.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
