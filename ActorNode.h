@@ -1,5 +1,5 @@
 /**
-* ActorNode.cpp
+* ActorNode.h
 * Author: Bhanu Vikas Renukuntla & Dion Chung
 * Date:   16th Nov 2016
 *

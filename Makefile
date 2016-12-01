@@ -14,7 +14,7 @@ else
     LDFLAGS += -g
 endif
 
-all: pathfinder actorconnections
+all: pathfinder actorconnections extension
 
 
 
@@ -22,7 +22,7 @@ all: pathfinder actorconnections
 
 pathfinder: ActorGraph.o MovieNode.o ActorNode.o
 actorconnections: ActorGraph.o MovieNode.o ActorNode.o UFActorNode.o
-
+extension: Person.o ContactGraph.o
 
 
 # include what ever source code *.h files ActorGraph relies on (these are merely the ones that were used in the solution)
@@ -33,7 +33,9 @@ ActorGraph.o: UnionFind.hpp MovieNode.h ActorNode.h ActorGraph.h traversalfuncti
 MovieNode.o: MovieNode.h
 ActorNode.o: ActorNode.h
 UFActorNode.o: UFActorNode.h
+Person.o: Person.h
+ContactGraph.o: ContactGraph.h Person.h
 
 
 clean:
-	rm -f pathfinder actorconnections *.o core*
+	rm -f pathfinder actorconnections extension *.o core*
