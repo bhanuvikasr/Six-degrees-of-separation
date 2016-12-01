@@ -31,9 +31,6 @@ public:
     UFActorNode* previous;
 
     UFActorNode(string name);
-
-    // bool operator<(const ActorNode& other);
-
 };
 
 

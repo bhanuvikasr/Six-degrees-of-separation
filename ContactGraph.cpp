@@ -89,28 +89,21 @@ void ContactGraph::infect(Person* p, float infection_rate, int iterations) {
     int total_dist = 0;
     int total_persons = 0;
 
-    r = ((double)rand() / RAND_MAX)
-
     while (!bfs_queue.empty()) {
       while (!bfs_queue.empty()) {
         Person* n = bfs_queue.front();
         bfs_queue.pop();
         bfs_queue2.push(n);
 
-        if (n->isInfected) {
-          continue;
-        }
-        else {
-          n->isInfected = true;
-          total_persons++;
-          total_dist += dist;
-          // cout << n->id << " ID " << total_persons << " p " << total_dist << " total dist " << endl;
-        }
-
         for (int i=0; i<n->contacts.size(); i++) {
             Person* next = n->contacts[i];
+            bool getsInfected = ((double)rand() / RAND_MAX) < (double)infection_rate;
+            next->isInfected = getsInfected;
             bfs_queue2.push(next);
         }
+
+
+
       }
       swap(bfs_queue, bfs_queue2);
       dist++;

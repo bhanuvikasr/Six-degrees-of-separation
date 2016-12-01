@@ -27,12 +27,40 @@ public:
   unordered_map<string, UFActorNode*> actors_map;
 
   UnionFind(void);
+
+  /*
+   * Destructor
+   */
   ~UnionFind();
+
+  /*
+   * Return height of from root to node
+   */
   int getHeight(UFActorNode* n);
+
+  /*
+   * Joins a vector of actor nodes (if they are not already joined), setting year they are joined
+   */
   void join(vector<UFActorNode*> & ActorsList, int movie_year);
+
+  /*
+   * Get the sentinal node of the set, return head
+   */
   UFActorNode* find(UFActorNode* n);
+
+  /*
+   * Return greatest year connecting two actors
+   */
   int getYear(string actor1, string actor2);
+
+  /*
+   * Read in file of actor movie connections and build maps
+   */
   void loadFromFile(const char* in_filename);
+
+  /*
+   * Iterate over movie map and build the set graph
+   */
   void buildGraph();
  };
 

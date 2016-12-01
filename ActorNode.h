@@ -33,6 +33,7 @@ public:
 
     ActorNode(string name);
 
+    // overload < for priority_queue
     bool operator<(const ActorNode& other);
 
 };
