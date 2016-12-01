@@ -89,6 +89,7 @@ int main(int argc, char**argv){
             bool foundPath = BFS(actor1, actor2, year);
             if (foundPath) {
               out << actor1_name + "\t" + actor2_name + "\t" + to_string(year) + "\n";
+              reset(G);
               break;
             }
             reset(G);
