@@ -28,7 +28,7 @@ While the Facebook data set represents virtual connections, we make the
 assumption that these friendships entail in-person contact, such that a virus
 can spread. Each iteration assumes that the infected 'make contact' with their
 friends. There is no cure or recovery and the infected remain virulent. Note:
-IDs must be continuous as they are in facebook_ucsd.txt and facebook_10.txt.
+graphs should be connected as they are in facebook_ucsd.txt and facebook_10.txt.
 
 ********************************************************************************
 *** Implementation

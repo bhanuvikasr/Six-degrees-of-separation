@@ -79,6 +79,7 @@ int main(int argc, char**argv){
 
   for (int i=0; i< rangeSet; i++) {
     int random_p = rand() % total_people;
+    if (G.people_map.find(random_p)==G.people_map.end()) continue;
     p = G.people_map[random_p];
     float baconNumber = getAvgBaconNumber(p, G);
     G.reset();
