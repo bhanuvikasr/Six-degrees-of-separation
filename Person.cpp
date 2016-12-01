@@ -11,16 +11,4 @@
 
 
 // method for creating and initialising a node
-Person::Person(int id) : id(id), isInfected(false) {}
-
-// overload < for priority_queue
-// bool Person::operator<(const Person& other) {
-//   if (this->years>other.years) {
-//     return true;
-//   }
-//   else if (this->years<other.years) {
-//     return false;
-//   }
-//   // prioritize alphabetically
-//   return (this->name<other.name);
-// }
+Person::Person(int id) : id(id), isInfected(false), isVisited(false) {}

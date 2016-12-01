@@ -1,0 +1,83 @@
+Extension Write Up
+Bhanu Vikas Renukuntla & Dion Chung
+16th Nov 2016
+
+How do different patient zeros affect the propagation of a virus?
+How do different infection rates affect the propagation of a virus?
+What if we can notice the spread of the virus and we institute an efficient
+quarantine? How many people can we save?
+
+********************************************************************************
+*** How to run Epidemic Model
+********************************************************************************
+
+First parameter is text file of ID pairs representing social connections.
+Second parameter is infection rate of the virus.
+Third parameter is the number of iterations that people make contact, similar to
+time.
+
+Example command is ./extension facebook_10.txt 0.001 100
+where 'facebook_10.txt' contains social connections and 0.001 represents an
+infection rate of 0.1% per contact. This is over a period of 100 iterations.
+
+********************************************************************************
+*** Assumptions
+********************************************************************************
+
+While the Facebook data set represents virtual connections, we make the
+assumption that these friendships entail in-person contact, such that a virus
+can spread. Each iteration assumes that the infected 'make contact' with their
+friends. There is no cure or recovery and the infected remain virulent. Note:
+IDs must be continuous as they are in facebook_ucsd.txt and facebook_10.txt.
+
+********************************************************************************
+*** Implementation
+********************************************************************************
+
+To study the affects of different patient zeros, it would be useful to calculate
+the connectedness of an individual. We define connectedness as the average
+Bacon Number, the total distance (unweighted) to reach all other nodes divided
+by the total nodes. With two queues, we pop off nodes in one and pushing their
+contacts onto the second queue. These all have a distance of (1 + previous
+distance). Mark them as visited and swap the two queues and repeat the process.
+This is similar to the worst case BFS, visiting each node once. This algorithm
+is run over 100 random nodes and the max and min connected nodes are infected.
+
+A queue stores all infected people and each friend has a chance of contracting
+the virus based on rand(). If all of a person's friends are infected, they are
+removed from the queue.
+
+
+********************************************************************************
+*** Expectation
+********************************************************************************
+
+In the case of different connectedness in patient zeros, we expect the most
+connected to quickly infect the rest of the population. Conversely we expect the
+least connected person to infect a smaller percent of the population in the
+initial period before ramping up.
+
+********************************************************************************
+*** Results
+********************************************************************************
+
+These results are based on the full facebook_ucsd.txt dataset with an infection
+rate of 0.001. From 100 random people, Person 12282 had the lowest average Bacon
+Number of 2.4698. This well connected person quickly infected the population.
+
+Iteration | Percent Infected
+1 0.00668986 percent of population infected
+25 0.127107 percent of population infected
+50 1.11721 percent of population infected
+75 12.5636 percent of population infected
+100 42.5074 percent of population infected
+
+In this simulation, Person 2695 is isolated, with average Bacon Number 4.04004.
+It is an interesting finding that the infection never even spreads.
+
+Iteration | Percent Infected
+1 0.00668986 percent of population infected
+25 0.00668986 percent of population infected
+50 0.00668986 percent of population infected
+75 0.00668986 percent of population infected
+100 0.00668986 percent of population infected

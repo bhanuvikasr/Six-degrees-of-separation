@@ -23,10 +23,9 @@ public:
     int id;
     vector<Person*> contacts;
     bool isInfected;
+    bool isVisited;
 
     Person(int id);
-
-    // bool operator<(const ActorNode& other);
 
 };
 

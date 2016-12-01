@@ -6,10 +6,11 @@
  * ContactGraph is a container for Person nodes for epidemic modeling
  */
 
- #include <typeinfo>
-
+#include <typeinfo>
+#include <ctime>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -19,6 +20,9 @@ using namespace std;
 
 ContactGraph::ContactGraph(void) {}
 
+/*
+ * Loads data set and builds graph
+ */
 bool ContactGraph::loadFromFile(const char* in_filename) {
     // Initialize the file stream
     ifstream infile(in_filename);
@@ -79,15 +83,19 @@ bool ContactGraph::loadFromFile(const char* in_filename) {
     return true;
 }
 
-void ContactGraph::infect(Person* p, float infection_rate, int iterations) {
+/*
+ * Infects friends with the virus based on rand() and infection_rate
+ */
+void ContactGraph::infect(Person* p, double infection_rate, int iterations) {
     queue<Person*> bfs_queue;
     queue<Person*> bfs_queue2;
     vector<int> counts;
+    int time_value = 0;
+    int infected_count = 1;
 
+    p->isInfected = true;
     bfs_queue.push(p);
-    int dist = 0;
-    int total_dist = 0;
-    int total_persons = 0;
+
 
     while (!bfs_queue.empty()) {
       while (!bfs_queue.empty()) {
@@ -95,25 +103,53 @@ void ContactGraph::infect(Person* p, float infection_rate, int iterations) {
         bfs_queue.pop();
         bfs_queue2.push(n);
 
-        for (int i=0; i<n->contacts.size(); i++) {
-            Person* next = n->contacts[i];
-            bool getsInfected = ((double)rand() / RAND_MAX) < (double)infection_rate;
-            next->isInfected = getsInfected;
-            bfs_queue2.push(next);
+        if (n->isVisited) {
+          continue;
+        }
+        else {
+          n->isVisited = true;
         }
 
-
-
+        for (int i=0; i<n->contacts.size(); i++) {
+            Person* next = n->contacts[i];
+            double p = ((double)rand() / RAND_MAX);
+            bool getsInfected = p < infection_rate;
+            if (getsInfected && !next->isInfected) {
+              next->isInfected = getsInfected;
+              infected_count++;
+              bfs_queue2.push(next);
+            }
+        }
       }
-      swap(bfs_queue, bfs_queue2);
-      dist++;
+      // perform swap with reset
+      while (!bfs_queue2.empty()) {
+        Person* n = bfs_queue2.front();
+        bfs_queue2.pop();
+        bool done = true;
+        for (int i=0; i<n->contacts.size(); i++) {
+          done = done & n->contacts[i]->isInfected;
+        }
+        if (!done) {
+          n->isVisited = false;
+          bfs_queue.push(n);
+        }
+      }
+      time_value++;
+      cout << time_value << " " << (double)infected_count * 100 /people_map.size() << " percent of population infected" << endl;
+      iterations--;
+      if (iterations==0){
+        break;
+      }
     }
-    return (float)total_dist/ total_persons;
 }
 
+/*
+ * Resets graph for next run
+ */
 void ContactGraph::reset() {
   for (auto it = people_map.begin(); it != people_map.end(); ++it) {
     it->second->isInfected = false;
+    it->second->isVisited = false;
   }
 }
 

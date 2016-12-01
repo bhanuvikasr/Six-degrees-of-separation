@@ -21,6 +21,3 @@
 *.la
 *.a
 *.lib
-
-# TSV files
-*.tsv

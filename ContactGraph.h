@@ -39,6 +39,7 @@ public:
    * return true if file was loaded sucessfully, false otherwise
    */
   bool loadFromFile(const char* in_filename);
+  void infect(Person* p, double infection_rate, int iterations);
   void reset();
 };
 
