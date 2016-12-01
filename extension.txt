@@ -4,8 +4,6 @@ Bhanu Vikas Renukuntla & Dion Chung
 
 How do different patient zeros affect the propagation of a virus?
 How do different infection rates affect the propagation of a virus?
-What if we can notice the spread of the virus and we institute an efficient
-quarantine? How many people can we save?
 
 ********************************************************************************
 *** How to run Epidemic Model
@@ -81,3 +79,6 @@ Iteration | Percent Infected
 50 0.00668986 percent of population infected
 75 0.00668986 percent of population infected
 100 0.00668986 percent of population infected
+
+If we reduce infection rate more to say 0.0001, even well connected people do
+not spread the virus.
